@@ -18,12 +18,14 @@ git clone https://github.com/ZygFridz/Test-Full.git
 ** Frontend **
 
 ติดตั้ง Dependencies ด้วยคำสั่ง
+
 ```bash
 npm install react-hook-form   #react-hook
 npm install tailwindcss postcss autoprefixer  # install tailwind
 npx tailwindcss init -p
 ```
-run frontend ด้วยคำสั่ง 
+
+Run Frontend ด้วยคำสั่ง 
 ```bash
 npm run dev
 ```
@@ -34,21 +36,24 @@ npm run dev
 ```bash
 npm install @prisma/client
 ```
-ติดตั้ง dependencies
+ติดตั้ง Dependencies
 ```bash
 npm install cors
 ```
 
-เชื่อมต่อ database โดยใส่ database_url ในไฟล์ .env ดังนี้
+เชื่อมต่อ Database โดยใส่ DATABASE_URL ในไฟล์ .env ดังนี้
 ```bash
 DATABASE_URL="mysql://root:123456@localhost:3306/test"
 ```
+
 ** Setup Prisma **
+
 ```bash
 npx prisma generate
 npx prisma migrate dev --name init
 ```
-run backend ด้วยคำสั่ง 
+
+Run Backend ด้วยคำสั่ง 
 ```bash
 npm run dev
 ```
@@ -61,13 +66,11 @@ npm run dev
 สามารถ:
 
 - กรอกฟอร์มเพิ่มผู้ใช้
-
 - แก้ไข/ลบผู้ใช้งานที่มีอยู่
 
 ฝั่ง Backend:
 
 - API รันที่ http://localhost:3005/users
-
 - สามารถทดสอบผ่าน Postman หรือ browser
 
 ## Project Structure
@@ -117,4 +120,5 @@ Test-Full/
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+Distributed under the MIT License.  
+See [LICENSE](https://choosealicense.com/licenses/mit/) for more information.
