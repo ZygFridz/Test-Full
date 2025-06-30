@@ -15,27 +15,26 @@ datasource db {
 
 model User {
   id        Int      @id @default(autoincrement())
-  name      String
+  username  String   @unique
+  password  String   
   email     String   @unique
-  role      String
+  role      Role?     
   createdAt DateTime @default(now())
 }
 
 model Role {
-  id        Int      @id @default(autoincrement())
-  name      String
+  user        User     @relation(fields: [User_id], references: [id])  
+  User_id     Int      @unique
+  id          Int      @id @default(autoincrement())
+  name        String
+  permission  Permission[]
   createdAt DateTime @default(now())
 }
 
 model Permission {
-  id        Int      @id @default(autoincrement())
+  role      Role    @relation(fields: [role_id], references: [id])
+  role_id   Int
+  id        Int     @id @default(autoincrement())
   name      String
   createdAt DateTime @default(now())
-}
-
-model Role_Permission {
-  id            Int      @id @default(autoincrement())
-  role_id       Int
-  permission_id Int
-  createdAt     DateTime @default(now())
 }
