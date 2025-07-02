@@ -1,23 +1,26 @@
 const userService = require('../services/userServices');
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
 
 //createUser
 const createUser = async (req, res) => {
-  const { name, email, role } = req.body;
-  const user = await userService.createUser({ name, email, role });
+  const { username, email, role } = req.body;
+  const user = await userService.createUser({ username, email, role });
   res.status(201).json(user);
 };
 
 //getUser
 const getAllUsers = async (req, res) => {
-  const users = await userService.getAllUsers();
+  const users = await userService.getAllUsers()
   res.json(users);
 };
 
 //updateUser
 const updateUser = async (req, res) => {
   const id = parseInt(req.params.id);
-  const { name, email } = req.body;
-  const user = await userService.updateUser(id, { name, email });
+  const { username, email } = req.body;
+
+  const user = await userService.updateUser(id, { username, email });
   res.json(user);
 };
 

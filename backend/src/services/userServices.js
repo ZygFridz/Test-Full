@@ -2,7 +2,11 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 const getAllUsers = () => {
-  return prisma.user.findMany();
+  return prisma.user.findMany({
+    include: {
+       role: true  // ดึง relation role มาด้วย
+    }
+  });
 };
 
 const createUser = (data) => {

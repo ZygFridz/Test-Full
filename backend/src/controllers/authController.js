@@ -34,13 +34,23 @@ const register = async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        await prisma.user.create({
+        const newUser = await prisma.user.create({
             data: {
                 username: username,
                 email: email,
                 password: hashedPassword
             },
         })
+
+        const roleName = username.toLowerCase() === "admin" ? "admin" : "user";
+
+        await prisma.role.create({
+            data: {
+                name: roleName,
+                User_id: newUser.id,
+            },
+        });
+
         return res.status(201).json({ msg: "สร้างบัญชีผู้ใช้สำเร็จ" });
 
     } catch (error) {
@@ -60,10 +70,13 @@ const login = async (req, res) => {
             return res.status(400).json({ msg: "กรุณากรอกชื่อผู้ใช้และรหัสผ่าน" });
         }
         // validate user
-        const user = await prisma.user.findMany({
+        const user = await prisma.user.findUnique({
             where: {
                 username: username,
-            }
+            },
+            include: {
+                role: true, // ✅ ดึง role มาด้วย
+            },
         })
 
         if (!user) {
@@ -78,10 +91,10 @@ const login = async (req, res) => {
                     username: user.username,
                     email: user.email,
                     id: user.id,
-                    role: user.role
+                    role: user.role?.name || "user",
                 }
             },
-                process.env.TOKEN_SECRET,
+                process.env.JWT_SECRET,
                 { expiresIn: "1d" }
             );
             return res.status(200).json({
